@@ -8,9 +8,11 @@
 
 <!-- Include Facebook SDK initialization -->
 <script>
+    var facebookAppId = <?= json_encode($block->getFacebookAppId()) ?>;
+console.log(facebookAppId);
     window.fbAsyncInit = function() {
         FB.init({
-            appId: '275951175154295',
+            appId: facebookAppId,
             autoLogAppEvents: true,
             xfbml: true,
             version: 'v11.0'

@@ -1,8 +1,6 @@
 <?php
-/**
- * Date :  1/7/24, 11:31 AM
- * Author : AHMED EHAB <sahmedehab@gmail.com>
- */
+// File: app/code/Seoudi/CustomRewards/Block/ProductShare.php
+
 namespace Seoudi\CustomRewards\Block;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -14,15 +12,18 @@ class ProductShare extends Template
 {
     protected $productRepository;
     protected $registry;
+    protected $scopeConfig;
 
     public function __construct(
         Context $context,
         ProductRepositoryInterface $productRepository,
         \Magento\Framework\Registry $registry,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
         $this->productRepository = $productRepository;
         $this->registry = $registry;
+        $this->scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
     }
 
@@ -40,6 +41,12 @@ class ProductShare extends Template
             // Handle exception (product not found)
             return null;
         }
+    }
+
+    public function getFacebookAppId()
+    {
+        // Retrieve custom configuration value
+        return $this->scopeConfig->getValue('seoudi/customlogin/Facebookid', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     protected function getCurrentProductId()

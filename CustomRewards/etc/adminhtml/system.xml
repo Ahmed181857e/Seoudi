@@ -1,0 +1,16 @@
+<!-- File: app/code/Seoudi/CustomRewards/etc/adminhtml/system.xml -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="seoudi" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Seoudi Configuration</label>
+            <tab>general</tab>
+            <resource>Seoudi_Customlogin::config_seoudi</resource>
+            <group id="customlogin" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>FaceBook App ID</label>
+                <field id="Facebookid" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>FaceBook App ID</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
