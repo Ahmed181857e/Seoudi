@@ -1,0 +1,71 @@
+<?php /** @var \Seoudi\CustomRewards\Block\ProductShareButtons $block */ ?>
+<?php $productId = $block->getProductId(); ?>
+
+<div>
+    <span>Share this product:</span>
+    <a href="javascript:void(0);" onclick="loadFacebookSdkAndShare(<?= $productId ?>)">Share on Facebook</a>
+</div>
+
+<!-- Include Facebook SDK initialization -->
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '275951175154295',
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v11.0'
+        });
+    };
+
+    function loadFacebookSdkAndShare(productId) {
+        // Load Facebook SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            js.onload = function() {
+                shareOnFacebook(productId);
+            };
+        }(document, 'script', 'facebook-jssdk'));
+    }
+
+    function shareOnFacebook(productId) {
+        var productUrl = '<?= $block->escapeJs($block->getProductUrl($productId)) ?>';
+        console.log(productUrl);
+
+        FB.ui({
+            method: 'share',
+            href: productUrl,
+        }, function (response) {
+            // Check if the user successfully shared the product
+            if (response && !response.error_code) {
+                updateRewardPoints(productId);
+            } else {
+                // updateRewardPoints(productId)
+                console.error('Share failed. Please try again.');
+            }
+        });
+    }
+
+    function updateRewardPoints(productId) {
+        jQuery.ajax({
+            url: '/customrewards/share/success', // Update the URL based on your actual endpoint
+            type: 'POST',
+            data: { product_id: productId },
+            success: function (response) {
+                if (response.success) {
+                    // Display a success message or perform additional actions
+                    console.log('Share successful! Reward points awarded.');
+                } else {
+                    // Handle the case where the share was not successful
+                    console.error('Failed to update reward points.');
+                }
+            },
+            error: function () {
+                console.error('Failed to communicate with the server.');
+            }
+        });
+    }
+</script>

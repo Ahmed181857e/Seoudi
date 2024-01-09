@@ -1,0 +1,6 @@
+extend type Query {
+    isLoggedIn: Boolean @resolver(class: "Seoudi\\Customlogin\\Model\\Resolver\\IsLoggedIn") @doc(description: "Check if the customer is logged in.")
+}
+extend type StoreConfig {
+    customField: String @resolver(class: "Seoudi\\Customlogin\\Model\\Resolver\\CustomField") @doc(description: "Custom configuration field.")
+}
